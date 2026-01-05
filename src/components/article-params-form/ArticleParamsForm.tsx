@@ -1,132 +1,20 @@
-import { useState } from 'react';
-import { ArrowButton } from '../../ui/arrow-button';
-import { Button } from '../../ui/button';
-import { Select } from '../../ui/select';
-import { RadioGroup } from '../../ui/radio-group';
-import { useArticleContext } from '../../contexts/ArticleContext';
-import {
-	fontFamilyOptions,
-	fontSizeOptions,
-	fontColors,
-	backgroundColors,
-	contentWidthArr,
-	defaultArticleState,
-	type ArticleStateType,
-	type OptionType,
-} from '../../constants/articleProps';
+import { ArrowButton } from 'src/ui/arrow-button';
+import { Button } from 'src/ui/button';
+
 import styles from './ArticleParamsForm.module.scss';
 
 export const ArticleParamsForm = () => {
-	const {
-		applyFormState,
-		resetArticleState,
-		articleState: currentArticleState,
-	} = useArticleContext();
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [formState, setFormState] =
-		useState<ArticleStateType>(currentArticleState);
-
-	const closePanel = () => {
-		setIsOpen(false);
-		setFormState(currentArticleState);
-	};
-
-	const handleFontFamilyChange = (selected: OptionType) => {
-		setFormState((prev) => ({ ...prev, fontFamilyOption: selected }));
-	};
-
-	const handleFontSizeChange = (selected: OptionType) => {
-		setFormState((prev) => ({ ...prev, fontSizeOption: selected }));
-	};
-
-	const handleFontColorChange = (selected: OptionType) => {
-		setFormState((prev) => ({ ...prev, fontColor: selected }));
-	};
-
-	const handleBackgroundColorChange = (selected: OptionType) => {
-		setFormState((prev) => ({ ...prev, backgroundColor: selected }));
-	};
-
-	const handleContentWidthChange = (selected: OptionType) => {
-		setFormState((prev) => ({ ...prev, contentWidth: selected }));
-	};
-
-	const handleApply = () => {
-		applyFormState(formState);
-		closePanel();
-	};
-
-	const handleReset = () => {
-		resetArticleState();
-		setFormState(defaultArticleState);
-		closePanel();
-	};
-
-	const handlePanelToggle = () => {
-		if (!isOpen) {
-			setFormState(currentArticleState);
-		}
-		setIsOpen(!isOpen);
-	};
-
 	return (
 		<>
-			<ArrowButton onClick={handlePanelToggle} isOpen={isOpen} />
-
-			<div className={`${styles.panel} ${isOpen ? styles.panel_open : ''}`}>
-				<div className={styles.panelContent}>
-					<h2 className={styles.title}>Задайте параметры</h2>
-
-					<div className={styles.form}>
-						<Select
-							selected={formState.fontFamilyOption}
-							options={fontFamilyOptions}
-							onChange={handleFontFamilyChange}
-							title='Шрифт'
-							placeholder='Выберите шрифт'
-						/>
-
-						<RadioGroup
-							name='fontSize'
-							options={fontSizeOptions}
-							selected={formState.fontSizeOption}
-							onChange={handleFontSizeChange}
-							title='Размер шрифта'
-						/>
-
-						<Select
-							selected={formState.fontColor}
-							options={fontColors}
-							onChange={handleFontColorChange}
-							title='Цвет текста'
-							placeholder='Выберите цвет текста'
-						/>
-
-						<Select
-							selected={formState.backgroundColor}
-							options={backgroundColors}
-							onChange={handleBackgroundColorChange}
-							title='Цвет фона'
-							placeholder='Выберите цвет фона'
-						/>
-
-						<Select
-							selected={formState.contentWidth}
-							options={contentWidthArr}
-							onChange={handleContentWidthChange}
-							title='Ширина контента'
-							placeholder='Выберите ширину'
-						/>
-
-						<div className={styles.buttons}>
-							<Button title='Сбросить' onClick={handleReset} type='clear' />
-							<Button title='Применить' onClick={handleApply} type='apply' />
-						</div>
+			<ArrowButton isOpen={false} onClick={() => {}} />
+			<aside className={styles.container}>
+				<form className={styles.form}>
+					<div className={styles.bottomContainer}>
+						<Button title='Сбросить' htmlType='reset' type='clear' />
+						<Button title='Применить' htmlType='submit' type='apply' />
 					</div>
-				</div>
-			</div>
-
-			{isOpen && <div className={styles.overlay} onClick={closePanel} />}
+				</form>
+			</aside>
 		</>
 	);
 };
