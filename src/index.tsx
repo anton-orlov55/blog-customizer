@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { Article } from './components/article/Article';
 import { ArticleParamsForm } from './components/article-params-form/ArticleParamsForm';
-import { defaultArticleState } from './constants/articleProps';
+import { ArticleProvider, useArticleContext } from './contexts/ArticleContext';
 
 import './styles/index.scss';
 import styles from './styles/index.module.scss';
@@ -14,15 +14,25 @@ const root = createRoot(domNode);
 
 const App = () => {
 	return (
+		<ArticleProvider>
+			<ArticleWrapper />
+		</ArticleProvider>
+	);
+};
+
+const ArticleWrapper = () => {
+	const { articleState } = useArticleContext();
+
+	return (
 		<main
 			className={clsx(styles.main)}
 			style={
 				{
-					'--font-family': defaultArticleState.fontFamilyOption.value,
-					'--font-size': defaultArticleState.fontSizeOption.value,
-					'--font-color': defaultArticleState.fontColor.value,
-					'--container-width': defaultArticleState.contentWidth.value,
-					'--bg-color': defaultArticleState.backgroundColor.value,
+					'--font-family': articleState.fontFamilyOption.value,
+					'--font-size': articleState.fontSizeOption.value,
+					'--font-color': articleState.fontColor.value,
+					'--container-width': articleState.contentWidth.value,
+					'--bg-color': articleState.backgroundColor.value,
 				} as CSSProperties
 			}>
 			<ArticleParamsForm />

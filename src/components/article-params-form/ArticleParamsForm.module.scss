@@ -1,32 +1,62 @@
-.container {
+.panel {
 	position: fixed;
-	left: 0;
-	width: 616px;
-	height: 100%;
-	overflow: scroll;
-	transform: translate(-616px);
-	transition: transform 0.5s ease;
+	top: 0;
+	left: -615px; // Увеличиваем ширину скрытия
+	z-index: 1000;
+	width: 615px; // Увеличиваем ширину панели (стандартная для сайдбаров)
+	height: 100vh;
+	overflow-y: auto;
+	background: white;
+	box-shadow: 2px 0 10px rgb(0 0 0 / 10%);
+	transition: left 0.3s ease-in-out;
+
+	&_open {
+		left: 0; // Отступ равный ширине стрелки + немного
+	}
 }
 
-.container_open {
-	transform: translate(0);
+.panelContent {
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	height: 100%;
+	padding: 30px;
+}
+
+.title {
+	margin: 0 0 30px;
+	color: #333333;
+	font-weight: bold;
+	font-size: 24px;
 }
 
 .form {
 	display: flex;
-	flex-shrink: 0;
+	flex: 1;
 	flex-direction: column;
-	box-sizing: border-box;
-	width: 616px;
-	height: auto;
-	min-height: 100%;
-	padding: 50px 31px;
-	background-color: #ffffff;
-	border-right: 1px solid #000000;
+	gap: 25px;
 }
 
-.bottomContainer {
+// Дополнительные стили для выравнивания компонентов
+
+.form > * {
+	margin-bottom: 15px;
+}
+
+.buttons {
 	display: flex;
-	justify-content: space-between;
+	gap: 15px;
 	margin-top: auto;
+	padding-top: 30px;
+
+	& > * {
+		flex: 1;
+	}
+}
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 999;
+	background: rgb(0 0 0 / 30%);
 }
