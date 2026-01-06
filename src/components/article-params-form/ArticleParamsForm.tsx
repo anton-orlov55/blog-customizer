@@ -78,46 +78,67 @@ export const ArticleParamsForm = () => {
 					<h2 className={styles.title}>Задайте параметры</h2>
 
 					<div className={styles.form}>
-						<Select
-							selected={formState.fontFamilyOption}
-							options={fontFamilyOptions}
-							onChange={handleFontFamilyChange}
-							title='Шрифт'
-							placeholder='Выберите шрифт'
-						/>
+						{/* Шрифт - Select компонент */}
+						<div className={styles.formGroup}>
+							<label className={styles.label}>Шрифт</label>
+							<Select
+								selected={formState.fontFamilyOption}
+								options={fontFamilyOptions}
+								onChange={handleFontFamilyChange}
+								title=''
+								placeholder='Выберите шрифт'
+							/>
+						</div>
 
-						<RadioGroup
-							name='fontSize'
-							options={fontSizeOptions}
-							selected={formState.fontSizeOption}
-							onChange={handleFontSizeChange}
-							title='Размер шрифта'
-						/>
+						{/* Размер шрифта - RadioGroup */}
+						<div className={styles.formGroup}>
+							<label className={styles.label}>Размер шрифта</label>
+							<RadioGroup
+								name='fontSize'
+								options={fontSizeOptions}
+								selected={formState.fontSizeOption}
+								onChange={handleFontSizeChange}
+								title=''
+							/>
+						</div>
 
-						<Select
-							selected={formState.fontColor}
-							options={fontColors}
-							onChange={handleFontColorChange}
-							title='Цвет текста'
-							placeholder='Выберите цвет текста'
-						/>
+						{/* Цвет текста - Select с цветами */}
+						<div className={styles.formGroup}>
+							<label className={styles.label}>Цвет текста</label>
+							<Select
+								selected={formState.fontColor}
+								options={fontColors}
+								onChange={handleFontColorChange}
+								title=''
+								placeholder='Выберите цвет текста'
+							/>
+						</div>
 
-						<Select
-							selected={formState.backgroundColor}
-							options={backgroundColors}
-							onChange={handleBackgroundColorChange}
-							title='Цвет фона'
-							placeholder='Выберите цвет фона'
-						/>
+						{/* Цвет фона - Select с цветами */}
+						<div className={styles.formGroup}>
+							<label className={styles.label}>Цвет фона</label>
+							<Select
+								selected={formState.backgroundColor}
+								options={backgroundColors}
+								onChange={handleBackgroundColorChange}
+								title=''
+								placeholder='Выберите цвет фона'
+							/>
+						</div>
 
-						<Select
-							selected={formState.contentWidth}
-							options={contentWidthArr}
-							onChange={handleContentWidthChange}
-							title='Ширина контента'
-							placeholder='Выберите ширину'
-						/>
+						{/* Ширина контента - Select с иконками */}
+						<div className={styles.formGroup}>
+							<label className={styles.label}>Ширина контента</label>
+							<Select
+								selected={formState.contentWidth}
+								options={contentWidthArr}
+								onChange={handleContentWidthChange}
+								title=''
+								placeholder='Выберите ширину'
+							/>
+						</div>
 
+						{/* Кнопки - Button компоненты */}
 						<div className={styles.buttons}>
 							<Button title='Сбросить' onClick={handleReset} type='clear' />
 							<Button title='Применить' onClick={handleApply} type='apply' />
@@ -126,6 +147,7 @@ export const ArticleParamsForm = () => {
 				</div>
 			</div>
 
+			{/* Оверлей для закрытия по клику вне панели */}
 			{isOpen && <div className={styles.overlay} onClick={closePanel} />}
 		</>
 	);

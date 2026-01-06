@@ -4,23 +4,47 @@ on:
   pull_request:
     branches:
       - main
-      
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
     - uses: actions/setup-node@v3
       with:
         node-version: 20
+        
     - name: Check if the repository is private
       if: ${{github.event.repository.private}}
       run: exit 1
-    - name: Get testing lib
-      run: set -eu && git clone https://github.com/Yandex-Practicum/tests-blog-customizer.git /tmp/tests-blog-customizer
+      
+    - name: Install project dependencies
+      run: npm ci
+      
+    - name: Get and setup testing lib
+      run: |
+        set -eu 
+        git clone https://github.com/Yandex-Practicum/tests-blog-customizer.git /tmp/tests-blog-customizer
+        cd /tmp/tests-blog-customizer
+        
+        # Устанавливаем зависимости тестовой библиотеки
+        npm ci
+        
+        # Устанавливаем Playwright и браузеры ВНУТРИ тестовой библиотеки
+        npm install @playwright/test
+        npx playwright install --with-deps chromium
+        
+        # Проверяем что браузеры установились
+        echo "Проверка установки браузеров:"
+        ls -la ~/.cache/ms-playwright/ || true
+        echo "Проверка исполняемого файла chrome:"
+        find ~/.cache/ms-playwright -name "chrome" -type f 2>/dev/null || true
+      
     - name: Run tests
       run: bash /tmp/tests-blog-customizer/run.sh
+      
     - uses: actions/upload-artifact@v4
       if: always()
       with:
