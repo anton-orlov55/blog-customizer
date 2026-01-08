@@ -1,9 +1,9 @@
 .panel {
 	position: fixed;
 	top: 0;
-	left: -615px; // Увеличиваем ширину скрытия
+	left: -615px;
 	z-index: 1000;
-	width: 615px; // Увеличиваем ширину панели (стандартная для сайдбаров)
+	width: 615px;
 	height: 100vh;
 	overflow-y: auto;
 	background: white;
@@ -11,7 +11,7 @@
 	transition: left 0.3s ease-in-out;
 
 	&_open {
-		left: 0; // Отступ равный ширине стрелки + немного
+		left: 0;
 	}
 }
 
@@ -37,10 +37,17 @@
 	gap: 25px;
 }
 
-// Дополнительные стили для выравнивания компонентов
+.formGroup {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+}
 
-.form > * {
-	margin-bottom: 15px;
+.label {
+	margin: 0;
+	color: #333333;
+	font-weight: 600;
+	font-size: 16px;
 }
 
 .buttons {
